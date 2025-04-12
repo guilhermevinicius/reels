@@ -1,21 +1,21 @@
-using Reels.Backoffice.Application.UseCases.Categories;
+using Reels.Backoffice.Application.UseCases.Genres;
 using Reels.Backoffice.UnitTests.Common;
 
-namespace Reels.Backoffice.UnitTests.Application.UseCases.Categories;
+namespace Reels.Backoffice.UnitTests.Application.UseCases.Genres;
 
-[Collection(nameof(GetCategoryAutoMockerCollection))]
-public class GetCategoryTest(GetCategoryAutoMockerFixture fixture) : BaseTest
+[Collection(nameof(GetGenreAutoMockerCollection))]
+public class GetGenreTest(GetGenreAutoMockerFixture fixture) : BaseTest
 {
     [Fact]
-    public async Task GetCategory_Handler_ShouldBeReturnCategory()
+    public async Task GetGenre_Handler_ShouldBeReturnGenre()
     {
         // Arrange
-        var query = new GetCategoryQuery(
+        var query = new GetGenreQuery(
             Guid.Parse("186184cd-7fc2-4205-a7c3-97eb4ea82b34"));
 
         // Action
         var handler = fixture.GetInstance();
-        fixture.MockGetCategory();
+        fixture.MockGetGenre();
         var result = await handler.Handle(query, CancellationToken.None);
 
         // Assert
@@ -23,10 +23,10 @@ public class GetCategoryTest(GetCategoryAutoMockerFixture fixture) : BaseTest
     }
 
     [Fact]
-    public async Task GetCategory_Handler_ShouldBeReturnErrorWhenCategoryNotFound()
+    public async Task GetGenre_Handler_ShouldBeReturnErrorWhenGenreNotFound()
     {
         // Arrange
-        var query = new GetCategoryQuery(
+        var query = new GetGenreQuery(
             Faker.Random.Guid());
 
         // Action
@@ -35,6 +35,6 @@ public class GetCategoryTest(GetCategoryAutoMockerFixture fixture) : BaseTest
 
         // Assert
         Assert.True(result.IsFailed);
-        Assert.Equal("Category not found", result.Errors[0].Message);
+        Assert.Equal("Genre not found", result.Errors[0].Message);
     }
 }

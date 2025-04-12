@@ -21,6 +21,7 @@ public static class PersistenceDependencyInjection
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IRepositoryQuery, RepositoryQuery>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IGenreRepository, GenreRepository>();
 
         return services;
     }

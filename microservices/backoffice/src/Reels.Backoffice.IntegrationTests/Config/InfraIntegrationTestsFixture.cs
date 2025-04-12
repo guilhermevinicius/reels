@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Reels.Backoffice.Domain.Models.Category;
+using Reels.Backoffice.Domain.Models.Genre;
 using Reels.Backoffice.Persistence.Configurations;
 using Testcontainers.PostgreSql;
 
@@ -63,10 +64,10 @@ public sealed class InfraIntegrationTestsFixture : WebApplicationFactory<Program
 
         Client = CreateClient(clientOptions);
 
-        await PopulateIngrationTest();
+        await PopulateIntegrationTest();
     }
 
-    private async Task PopulateIngrationTest()
+    private async Task PopulateIntegrationTest()
     {
         var scope = Services.CreateScope();
         
@@ -77,6 +78,8 @@ public sealed class InfraIntegrationTestsFixture : WebApplicationFactory<Program
         await context.Database.EnsureCreatedAsync();
 
         await PopulateCategories(context);
+
+        await PopulateGenre(context);
 
         await context.SaveChangesAsync();
     }
@@ -99,6 +102,24 @@ public sealed class InfraIntegrationTestsFixture : WebApplicationFactory<Program
 
         await context.AddAsync(category, CancellationToken.None);
         await context.AddAsync(category2, CancellationToken.None);
+    }
+
+    private static async Task PopulateGenre(DbContext context)
+    {
+        var genre = Genre.Create(
+            "Category",
+            false);
+
+        genre.Id = Guid.Parse("2278a870-8dc8-4d70-acb7-f6ece6754b09");
+        
+        var genre2 = Genre.Create(
+            "Category",
+            true);
+
+        genre2.Id = Guid.Parse("2278a870-8dc8-4d70-acb7-f6ece6754b19");
+
+        await context.AddAsync(genre, CancellationToken.None);
+        await context.AddAsync(genre2, CancellationToken.None);
     }
 
     #endregion
