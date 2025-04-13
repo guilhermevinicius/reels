@@ -32,5 +32,7 @@ internal sealed class GenreMapping : IEntityTypeConfiguration<Genre>
         builder.HasMany(x => x.GenreCategories)
             .WithOne(x => x.Genre)
             .HasForeignKey(x => x.GenreId);
+
+        builder.Ignore(x => x.Events);
     }
 }

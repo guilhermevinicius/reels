@@ -22,6 +22,7 @@ public static class PersistenceDependencyInjection
         services.AddScoped<IRepositoryQuery, RepositoryQuery>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IGenreRepository, GenreRepository>();
+        services.AddScoped<IVideoRepository, VideoRepository>();
 
         return services;
     }

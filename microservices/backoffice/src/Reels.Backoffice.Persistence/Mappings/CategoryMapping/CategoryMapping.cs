@@ -33,5 +33,7 @@ internal sealed class CategoryMapping
         builder.Property(x => x.CreatedAt)
             .IsRequired()
             .ValueGeneratedOnAdd();
+
+        builder.Ignore(x => x.Events);
     }
 }
