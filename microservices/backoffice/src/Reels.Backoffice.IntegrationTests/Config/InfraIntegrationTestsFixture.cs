@@ -1,3 +1,4 @@
+using System.Text;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -38,6 +39,16 @@ public sealed class InfraIntegrationTestsFixture : WebApplicationFactory<Program
         Client.Dispose();
     }
 
+    public async Task<HttpResponseMessage> SendRequest(HttpMethod httpMethod, string requestUri, string jsonContent)
+    {
+        var request = new HttpRequestMessage(httpMethod, requestUri);
+
+        if (!string.IsNullOrEmpty(jsonContent))
+            request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+        return await Client.SendAsync(request);
+    }
+
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.UseEnvironment("Testing");
@@ -70,11 +81,11 @@ public sealed class InfraIntegrationTestsFixture : WebApplicationFactory<Program
     private async Task PopulateIntegrationTest()
     {
         var scope = Services.CreateScope();
-        
+
         var provider = scope.ServiceProvider;
-        
+
         await using var context = provider.GetRequiredService<DataContext>();
-        
+
         await context.Database.EnsureCreatedAsync();
 
         await PopulateCategories(context);
@@ -83,7 +94,7 @@ public sealed class InfraIntegrationTestsFixture : WebApplicationFactory<Program
 
         await context.SaveChangesAsync();
     }
-    
+
     #region Population
 
     private static async Task PopulateCategories(DbContext context)
@@ -93,15 +104,22 @@ public sealed class InfraIntegrationTestsFixture : WebApplicationFactory<Program
             "CategoryDescription");
 
         category.Id = Guid.Parse("2278a870-8dc8-4d70-acb7-f6ece6754b09");
-        
+
         var category2 = Category.Create(
             "Category",
             "CategoryDescription");
 
         category2.Id = Guid.Parse("2278a870-8dc8-4d70-acb7-f6ece6754b19");
 
+        var category3 = Category.Create(
+            "Category",
+            "CategoryDescription");
+
+        category3.Id = Guid.Parse("2278a870-8dc8-4d70-acb7-f6ece6754b29");
+
         await context.AddAsync(category, CancellationToken.None);
         await context.AddAsync(category2, CancellationToken.None);
+        await context.AddAsync(category3, CancellationToken.None);
     }
 
     private static async Task PopulateGenre(DbContext context)
@@ -111,17 +129,23 @@ public sealed class InfraIntegrationTestsFixture : WebApplicationFactory<Program
             false);
 
         genre.Id = Guid.Parse("2278a870-8dc8-4d70-acb7-f6ece6754b09");
-        
+
         var genre2 = Genre.Create(
             "Category",
             true);
 
         genre2.Id = Guid.Parse("2278a870-8dc8-4d70-acb7-f6ece6754b19");
 
+        var genre3 = Genre.Create(
+            "Category",
+            true);
+
+        genre3.Id = Guid.Parse("2278a870-8dc8-4d70-acb7-f6ece6754b29");
+
         await context.AddAsync(genre, CancellationToken.None);
         await context.AddAsync(genre2, CancellationToken.None);
+        await context.AddAsync(genre3, CancellationToken.None);
     }
 
     #endregion
-    
 }
