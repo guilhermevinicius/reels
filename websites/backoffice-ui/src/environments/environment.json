@@ -1,0 +1,4 @@
+{
+  "environment": "development",
+  "api": "https://localhost:7060/api"
+}
