@@ -33,7 +33,7 @@ internal static class ApiDependencyInjection
 
         app.MapScalarApiReference();
 
-        app.UseCors();
+        app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
         app.UseHttpsRedirection();
 
