@@ -1,0 +1,45 @@
+<form [formGroup]="videoForm" (submit)="onSubmit()" class="flex flex-col gap-4">
+
+  <div class="w-full p-4 flex flex-row items-center justify-between">
+    <span class="text-xl">Video</span>
+    <div class="flex flex-row items-center gap-4">
+      <button type="submit" [disabled]="!videoForm.valid" class="px-4 py-2 rounded-full disabled:text-gray-500 disabled:bg-gray-300 bg-black text-white">Save draft</button>
+    </div>
+  </div>
+
+  <div class="mt-4 flex flex-row items-start gap-4">
+    <div class="flex-1 flex flex-col gap-4">
+
+      <div class="bg-white rounded-2xl p-4">
+        <div class="flex flex-row items-center justify-between">
+          <span class="font-semibold">Video detail </span>
+        </div>
+
+        <div class="p-4">
+          <div class="flex flex-col gap-4">
+            <app-input label="Title" formControlName="title"/>
+            <textarea-input label="Description" formControlName="description" />
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-4">
+        <div class="mb-8">
+          <span class="font-semibold text-xl">Video detail </span>
+        </div>
+        <div class="w-full mb-8 flex flex-row items-center justify-between gap-4">
+          <app-input type="number" label="Duration" formControlName="duration" />
+          <app-input type="number" label="Year lanched" formControlName="yearLaunched" />
+          <select-input label="Rating" [options]="ratings" formControlName="rating" />
+        </div>
+        <select-input label="Category" [options]="categories" formControlName="category"/>
+      </div>
+
+    </div>
+    <div class="w-[400px] flex flex-col gap-4">
+      <video-upload-drag-drop title="Upload thumb" (file)="file = $event"/>
+      <video-upload-drag-drop title="Upload thumb half" (file)="file = $event"/>
+    </div>
+  </div>
+
+</form>

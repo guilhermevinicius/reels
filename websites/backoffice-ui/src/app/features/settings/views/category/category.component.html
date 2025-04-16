@@ -1,0 +1,84 @@
+<div class="w-[1000px] m-auto bg-[#212121] shadow-sm rounded-2xl mt-4">
+  <div class="border-b border-gray-300 p-4 flex flex-row items-center">
+    <div class="w-full flex flex-row items-center gap-4 text-[#B5B5B5]">
+
+      <div class="flex-1 h-[40px] bg-[#373737] rounded-lg flex flex-row gap-2 items-center px-4 py-2">
+        <i class="pi pi-search"></i>
+        <input type="text" class="w-full h-full outline-none" placeholder="Pesquise pelo nome">
+      </div>
+      <div class="flex flex-row items-center gap-4">
+        <p-button label="Novo" class="bg-green-600 px-4 text-black py-1 rounded-2xl" icon="pi pi-plus-circle"
+                  (onClick)="openForm()"/>
+        <button class="cursor-pointer" (click)="listCategory()">
+          <i class="pi pi-refresh text-xl"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-row items-center justify-between p-4 text-sm text-[#B5B5B5] border-b border-gray-100">
+    <span>Nome</span>
+    <span>Descrição</span>
+    <span></span>
+  </div>
+  @if (showForm) {
+    <div class="bg-[#373737] p-8 rounded-2xl -mr-4 -ml-4 shadow">
+      <span class="text-white">Adicionar nova categoria</span>
+      <form [formGroup]="categoryForm" (submit)="onSubmitForm()" class="mt-4">
+        <div class="flex flex-row items-center mb-4">
+          <div class="flex-1 flex flex-col gap-2">
+            <label for="name">name</label>
+            <input id="name" pInputText formControlName="name"/>
+          </div>
+
+          <div class="flex-1 flex flex-col gap-2">
+            <label for="description">Description</label>
+            <input id="description" pInputText formControlName="description"/>
+          </div>
+
+        </div>
+        <div class="flex flex-row items-center justify-end gap-4">
+          <p-button label="Cancel" (click)="closeForm()" size="small"/>
+          <p-button class="bg-green-500 px-4 py-1 rounded-full" [disabled]="!categoryForm.valid" type="submit"
+                    label="Save" size="small"/>
+        </div>
+      </form>
+    </div>
+  }
+
+  <div class="pb-4">
+
+    @for (category of categories; track category.id) {
+      <div class="flex flex-row items-center justify-between p-4 text-sm text-[#B5B5B5]">
+        <span> {{ category.name }} </span>
+        <span> {{ category.description }} </span>
+        <div class="flex flex-row items-center gap-4">
+            <p-button icon="pi pi-pencil" label="Edit" (onClick)="openForm(category.id)" />
+            <p-button icon="pi pi-trash" label="Remove" (onClick)="openDialogDeleteDialog($event, category.id)" />
+        </div>
+      </div>
+    }
+    <!--    <p-table [value]="categories">-->
+    <!--      <ng-template #header>-->
+    <!--        <tr>-->
+    <!--          <th>Name</th>-->
+    <!--          <th>Status</th>-->
+    <!--          <th>Options</th>-->
+    <!--        </tr>-->
+    <!--      </ng-template>-->
+    <!--      <ng-template #body let-category>-->
+    <!--        <tr>-->
+    <!--          <td>{{ category.name }}</td>-->
+    <!--          <td>{{ category.isActive }}</td>-->
+    <!--          <td>-->
+    <!--            <p-button label="Edit" (onClick)="openDialogForm(category.id)" />-->
+    <!--            <p-button label="Remove" (onClick)="openDialogDeleteDialog($event, category.id)" />-->
+    <!--          </td>-->
+    <!--        </tr>-->
+    <!--      </ng-template>-->
+    <!--    </p-table>-->
+
+  </div>
+</div>
+
+<p-toast/>
+<p-confirmdialog/>

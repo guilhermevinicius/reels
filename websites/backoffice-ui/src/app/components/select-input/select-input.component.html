@@ -1,0 +1,15 @@
+<div class="w-full flex flex-col gap-2">
+  <span class="font-semibold text-[#101010]">
+    {{ label }}
+  </span>
+  <select
+    [disabled]="disabled"
+    [value]="value"
+    (input)="onInputChange($event)"
+    class="w-full h-[48px] px-4 outline-none rounded-full border border-[#E2E2E2] focus:border-indigo-500 placeholder:text-[#727272]"
+  >
+    @for(option of options; track $index) {
+      <option [value]="option.value">{{ option.name }}</option>
+    }
+  </select>
+</div>

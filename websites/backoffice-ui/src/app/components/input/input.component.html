@@ -1,0 +1,13 @@
+<div class="w-full flex flex-col gap-2">
+  <span class="font-semibold text-[#101010]">
+    {{ label }}
+  </span>
+  <input
+    [type]="type"
+    [disabled]="disabled"
+    [value]="value"
+    (input)="onInputChange($event)"
+    class="w-full h-[48px] px-4 outline-none rounded-full border border-[#E2E2E2] focus:border-indigo-500 placeholder:text-[#727272]"
+    [placeholder]="placeholder"
+  >
+</div>

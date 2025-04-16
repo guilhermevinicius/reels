@@ -1,4 +1,4 @@
 {
   "environment": "development",
-  "api": "https://localhost:7060/api"
+  "api": "https://localhost:7057/api"
 }

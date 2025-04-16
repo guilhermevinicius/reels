@@ -1,0 +1,11 @@
+<div class="w-full flex flex-col gap-2">
+  <span class="font-semibold text-[#101010]">
+    {{ label }}
+  </span>
+  <textarea
+    class="w-full h-[120px] p-2 outline-none rounded-xl border border-[#E2E2E2] focus:border-indigo-500 placeholder:text-[#727272]"
+    [disabled]="disabled"
+    (input)="onInputChange($event)"
+  >
+  </textarea>
+</div>

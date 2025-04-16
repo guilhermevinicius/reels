@@ -1,0 +1,35 @@
+<p-button label="new genre" (onClick)="openDialogForm()" />
+
+<p-table [value]="genres" [tableStyle]="{ 'min-width': '50rem' }">
+  <ng-template #header>
+    <tr>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Options</th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-genre>
+    <tr>
+      <td>{{ genre.name }}</td>
+      <td>{{ genre.isActive }}</td>
+      <td>
+        <p-button label="Edit" (onClick)="openDialogForm(genre.id)" />
+        <p-button label="Remove" (onClick)="openDialogDeleteDialog($event, genre.id)" />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-toast/>
+<p-confirmdialog />
+
+<p-dialog header="Category" [(visible)]="showDialogForm">
+  <form [formGroup]="genreForm" (submit)="onSubmitForm()">
+    <p-floatlabel>
+      <input id="name" pInputText formControlName="name" />
+      <label for="name">name</label>
+    </p-floatlabel>
+
+    <p-button [disabled]="!genreForm.valid" type="submit" label="Save" size="small" />
+  </form>
+</p-dialog>
