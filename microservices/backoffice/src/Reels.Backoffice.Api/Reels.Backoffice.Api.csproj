@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Reels.Backoffice.Application\Reels.Backoffice.Application.csproj" />
+      <ProjectReference Include="..\Reels.Backoffice.Infrastructure\Reels.Backoffice.Infrastructure.csproj" />
       <ProjectReference Include="..\Reels.Backoffice.Persistence\Reels.Backoffice.Persistence.csproj" />
     </ItemGroup>
 

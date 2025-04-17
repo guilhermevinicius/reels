@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reels.Backoffice.Api", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reels.Backoffice.IntegrationTests", "src\Reels.Backoffice.IntegrationTests\Reels.Backoffice.IntegrationTests.csproj", "{E085E8D8-2382-42D0-9860-9225318B3285}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reels.Backoffice.Infrastructure", "src\Reels.Backoffice.Infrastructure\Reels.Backoffice.Infrastructure.csproj", "{BD30953D-A385-4A71-A2B7-53E9AF422008}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{E085E8D8-2382-42D0-9860-9225318B3285}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E085E8D8-2382-42D0-9860-9225318B3285}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E085E8D8-2382-42D0-9860-9225318B3285}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD30953D-A385-4A71-A2B7-53E9AF422008}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD30953D-A385-4A71-A2B7-53E9AF422008}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD30953D-A385-4A71-A2B7-53E9AF422008}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD30953D-A385-4A71-A2B7-53E9AF422008}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{25BC7CED-08C0-410F-87AC-01CD441A0F2D} = {977E46B3-5E85-4E98-AE99-6C0B7F6F5757}

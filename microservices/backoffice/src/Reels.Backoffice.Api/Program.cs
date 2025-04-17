@@ -1,5 +1,6 @@
 using Reels.Backoffice.Api.Configurations;
 using Reels.Backoffice.Application.Configurations;
+using Reels.Backoffice.Infrastructure.Configurations;
 using Reels.Backoffice.Persistence.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,7 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .ConfigureApi()
     .ConfigureApplication()
-    .ConfigurePersistence(builder.Configuration);
+    .ConfigurePersistence(builder.Configuration)
+    .ConfigureInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
