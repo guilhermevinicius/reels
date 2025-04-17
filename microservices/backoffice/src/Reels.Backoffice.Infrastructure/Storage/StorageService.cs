@@ -35,16 +35,17 @@ internal sealed class StorageService
 
     public async Task<string> UploadFile(string path, string contentType, string fileName, Stream file)
     {
+        var pathWithFileName = $"{path}/{fileName}";
         var args = new PutObjectArgs()
             .WithBucket(_settings.BucketName)
-            .WithObject(fileName)
+            .WithObject(pathWithFileName)
             .WithStreamData(file)
             .WithContentType(contentType)
             .WithObjectSize(file.Length);
 
         await _client.PutObjectAsync(args);
 
-        return path;
+        return pathWithFileName;
     }
 
     public async Task<string> GetObjectUrl(string key)

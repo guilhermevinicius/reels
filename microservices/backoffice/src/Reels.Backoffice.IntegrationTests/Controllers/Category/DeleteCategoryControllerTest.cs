@@ -13,7 +13,7 @@ public class DeleteCategoryControllerTest(InfraIntegrationTestsFixture fixture)
         var requestUri = $"/api/v1/categories/2278a870-8dc8-4d70-acb7-f6ece6754b29";
 
         // Action
-        var response = await fixture.SendRequest(HttpMethod.Delete, requestUri, null);
+        var response = await fixture.SendRequest(HttpMethod.Delete, requestUri);
         var responseDeserialized = await DeserializeResponseHelper.Response(response);
 
         // Assert
@@ -27,7 +27,7 @@ public class DeleteCategoryControllerTest(InfraIntegrationTestsFixture fixture)
         var requestUri = $"/api/v1/categories/00000000-0000-0000-0000-000000000000";
 
         // Action
-        var response = await fixture.SendRequest(HttpMethod.Delete, requestUri, null);
+        var response = await fixture.SendRequest(HttpMethod.Delete, requestUri);
         var responseDeserialized = await DeserializeResponseHelper.Response(response);
 
         // Assert

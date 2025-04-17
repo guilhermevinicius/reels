@@ -4,9 +4,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Minio;
+using Reels.Backoffice.Application.Contracts.Storage;
 using Reels.Backoffice.Domain.Models.Category;
 using Reels.Backoffice.Domain.Models.Genre;
+using Reels.Backoffice.Infrastructure.Storage;
 using Reels.Backoffice.Persistence.Configurations;
+using Testcontainers.Minio;
 using Testcontainers.PostgreSql;
 
 namespace Reels.Backoffice.IntegrationTests.Config;
@@ -16,7 +20,16 @@ public sealed class InfraIntegrationTestsCollection : IClassFixture<InfraIntegra
 
 public sealed class InfraIntegrationTestsFixture : WebApplicationFactory<Program>, IAsyncLifetime, IDisposable
 {
+    private const string AccessKey = "accessKey";
+    private const string AccessSecret = "accessSecret";
+    
     private readonly PostgreSqlContainer _postgreSqlContainer = new PostgreSqlBuilder().Build();
+    private readonly MinioContainer _minioContainer = new MinioBuilder()
+        .WithPortBinding(9050, true)
+        .WithEnvironment("MINIO_ROOT_USER", AccessKey)
+        .WithEnvironment("MINIO_ROOT_PASSWORD", AccessSecret)
+        .Build();
+    
     public ISender Sender { get; private set; }
 
     public HttpClient Client { get; private set; } = new();
@@ -24,12 +37,14 @@ public sealed class InfraIntegrationTestsFixture : WebApplicationFactory<Program
     public async Task InitializeAsync()
     {
         await _postgreSqlContainer.StartAsync();
+        await _minioContainer.StartAsync();
         await InitializeClient();
     }
 
     public new async Task DisposeAsync()
     {
         await _postgreSqlContainer.StopAsync();
+        await _minioContainer.StopAsync();
     }
 
     public new void Dispose()
@@ -39,7 +54,14 @@ public sealed class InfraIntegrationTestsFixture : WebApplicationFactory<Program
         Client.Dispose();
     }
 
-    public async Task<HttpResponseMessage> SendRequest(HttpMethod httpMethod, string requestUri, string jsonContent)
+    public async Task<HttpResponseMessage> SendRequest(HttpMethod httpMethod, string requestUri)
+    {
+        var request = new HttpRequestMessage(httpMethod, requestUri);
+
+        return await Client.SendAsync(request);
+    }
+    
+    public async Task<HttpResponseMessage> SendRequest(HttpMethod httpMethod, string requestUri, string? jsonContent = null)
     {
         var request = new HttpRequestMessage(httpMethod, requestUri);
 
@@ -48,10 +70,18 @@ public sealed class InfraIntegrationTestsFixture : WebApplicationFactory<Program
 
         return await Client.SendAsync(request);
     }
+    
+    public async Task<HttpResponseMessage> SendRequest(HttpMethod httpMethod, string requestUri, MultipartFormDataContent content)
+    {
+        var request = new HttpRequestMessage(httpMethod, requestUri);
+        request.Content = content;
+
+        return await Client.SendAsync(request);
+    }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        builder.UseEnvironment("Testing");
+        builder.UseEnvironment("Test");
 
         builder.ConfigureServices(services =>
         {
@@ -59,6 +89,11 @@ public sealed class InfraIntegrationTestsFixture : WebApplicationFactory<Program
                 descriptor.ServiceType == typeof(DbContextOptions<DataContext>));
 
             services.Remove(dbContextOptionsDescriptor!);
+
+            var storage = services.SingleOrDefault(descriptor =>
+                descriptor.ServiceType == typeof(IMinioClient));
+
+            services.Remove(storage!);
 
             services.AddDbContext<DataContext>(option =>
                 option.UseNpgsql(_postgreSqlContainer.GetConnectionString())

@@ -13,7 +13,7 @@ public class ListGenreControllerTest(InfraIntegrationTestsFixture fixture)
         var requestUri = $"/api/v1/genres";
 
         // Action
-        var response = await fixture.SendRequest(HttpMethod.Get, requestUri, null);
+        var response = await fixture.SendRequest(HttpMethod.Get, requestUri);
         var responseDeserialized = await DeserializeResponseHelper.Response(response);
 
         // Assert

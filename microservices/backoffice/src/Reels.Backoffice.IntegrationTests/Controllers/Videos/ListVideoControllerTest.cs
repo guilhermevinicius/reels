@@ -13,7 +13,7 @@ public class ListVideoControllerTest(InfraIntegrationTestsFixture fixture)
         var requestUri = $"/api/v1/videos";
 
         // Action
-        var response = await fixture.SendRequest(HttpMethod.Get, requestUri, null);
+        var response = await fixture.SendRequest(HttpMethod.Get, requestUri);
         var responseDeserialized = await DeserializeResponseHelper.Response(response);
 
         // Assert

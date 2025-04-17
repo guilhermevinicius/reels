@@ -2,8 +2,8 @@ namespace Reels.Backoffice.Infrastructure.Storage;
 
 public sealed record StorageSettings
 {
-    public string Endpoint { get; init; }
-    public string AccessKey { get; init; }
-    public string SecretKey { get; init; }
-    public string BucketName { get; init; }
+    public string Endpoint { get; set; }
+    public string AccessKey { get; set; }
+    public string SecretKey { get; set; }
+    public string BucketName { get; set; }
 }

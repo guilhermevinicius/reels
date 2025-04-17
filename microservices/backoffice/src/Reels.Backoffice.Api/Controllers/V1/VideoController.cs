@@ -1,7 +1,9 @@
 using Asp.Versioning;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Reels.Backoffice.Api.Controllers.V1.Requests;
 using Reels.Backoffice.Application.UseCases.Videos;
+using Reels.Backoffice.Domain.ValueObjects;
 
 namespace Reels.Backoffice.Api.Controllers.V1;
 
@@ -20,8 +22,26 @@ public class VideoController(
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(CreateVideoCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromForm] CreateVideoRequest request, IFormFile thumb, IFormFile thumbHalf,
+        CancellationToken cancellationToken)
     {
+        var command = new CreateVideoCommand(
+           request.Title,
+           request.Description,
+           request.YearLaunched,
+           request.Opened,
+           request.Published,
+           request.Duration,
+           request.Rating,
+           new MediaMetadata(
+               thumb.FileName,
+               thumb.ContentType,
+               thumb.OpenReadStream()),
+           new MediaMetadata(
+               thumbHalf.FileName,
+               thumbHalf.ContentType,
+               thumbHalf.OpenReadStream()));
+
         var response = await sender.Send(command, cancellationToken);
         return CustomResponse(response);
     }

@@ -29,6 +29,7 @@ public static class InfrastructureDependencyInjection
         services.AddMinio(config => config
                 .WithEndpoint(settings.Endpoint)
                 .WithCredentials(settings.AccessKey, settings.SecretKey)
+                .WithSSL(false)
                 .Build());
 
         services.AddSingleton<IStorageService, StorageService>();

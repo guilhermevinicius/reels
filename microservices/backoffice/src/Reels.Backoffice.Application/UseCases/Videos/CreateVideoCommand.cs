@@ -1,5 +1,6 @@
 using Reels.Backoffice.Application.SeedWorks.Messaging;
 using Reels.Backoffice.Domain.Models.Video.Enums;
+using Reels.Backoffice.Domain.ValueObjects;
 
 namespace Reels.Backoffice.Application.UseCases.Videos;
 
@@ -10,5 +11,7 @@ public sealed record CreateVideoCommand(
     bool Opened,
     bool Published,
     int Duration,
-    Rating Rating)
+    Rating Rating,
+    MediaMetadata Thumb,
+    MediaMetadata ThumbHalf)
     : ICommand<bool>;

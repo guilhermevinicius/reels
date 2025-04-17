@@ -13,7 +13,7 @@ public class ListCategoryControllerTest(InfraIntegrationTestsFixture fixture)
         var requestUri = $"/api/v1/categories";
 
         // Action
-        var response = await fixture.SendRequest(HttpMethod.Get, requestUri, null);
+        var response = await fixture.SendRequest(HttpMethod.Get, requestUri);
         var responseDeserialized = await DeserializeResponseHelper.Response(response);
 
         // Assert
