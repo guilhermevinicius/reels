@@ -8,4 +8,6 @@ public sealed record GetVideoResponse(
     string Description,
     int YearLaunched,
     int Duration,
-    Rating Rating);
+    Rating Rating,
+    string? Thumb,
+    string? ThumbHalf);

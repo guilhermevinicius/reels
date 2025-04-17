@@ -10,7 +10,7 @@ internal sealed class StorageService
 {
     private readonly IMinioClient _client;
     private readonly StorageSettings _settings;
-    
+
     public StorageService(
         IOptions<StorageSettings> storageSettings,
         IMinioClientFactory minioClientFactory)
@@ -20,7 +20,7 @@ internal sealed class StorageService
         var beArgs = new BucketExistsArgs()
             .WithBucket(_settings.BucketName);
 
-        var client = minioClientFactory.CreateClient().WithSSL(false);
+        var client = minioClientFactory.CreateClient();
         client.BucketExistsAsync(beArgs).ConfigureAwait(false);
         _client = client;
     }

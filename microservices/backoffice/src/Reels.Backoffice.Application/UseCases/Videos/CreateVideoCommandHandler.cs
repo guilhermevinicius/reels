@@ -42,7 +42,7 @@ internal sealed class CreateVideoCommandHandler(
 
     private async Task<string> BuildFile(Guid videoId, MediaMetadata mediaMetadata)
     {
-        var path = $"/videos/{videoId}/thumbs";
+        var path = $"videos/{videoId}/thumbs";
         var extension = mediaMetadata.FileName.Split('.').Last();
         var name = $"{Guid.NewGuid()}.{extension}";
 
