@@ -26,4 +26,7 @@ export class VideoService {
     return this.#httpClient.post<IApiResponse<boolean>>(this.apiRouteV1, body);
   }
 
+  updateVideo$(id:string, body: FormData): Observable<IApiResponse<boolean>> {
+    return this.#httpClient.put<IApiResponse<boolean>>(`${this.apiRouteV1}/${id}`, body);
+  }
 }

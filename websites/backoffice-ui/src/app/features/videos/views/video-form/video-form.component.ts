@@ -22,6 +22,7 @@ import {addWarning} from '@angular-devkit/build-angular/src/utils/webpack-diagno
   ]
 })
 export class VideoFromComponent {
+  video: IVideo | null = null;
   thumb: File | null = null;
   thumbHalf: File | null = null;
 
@@ -66,6 +67,7 @@ export class VideoFromComponent {
       if (params.videoId) {
         this.videoService.getVideo$(params.videoId).subscribe({
           next: data => {
+            this.video = data.data;
             this.setForm(data.data)
           },
           error: params => {},
@@ -103,16 +105,23 @@ export class VideoFromComponent {
     formData.append('thumb', this.thumb!)
     formData.append('thumbHalf', this.thumbHalf!)
 
-    // thumb: File | null = null;
-    // thumbHalf: File | null = null;
-
-    this.videoService.createVideo$(formData).subscribe({
-      next: params => {
-        this.router.navigateByUrl('/videos/overview')
-      },
-      error: err => {
-      }
-    })
+    if (this.video) {
+      this.videoService.updateVideo$(this.video.id, formData).subscribe({
+        next: params => {
+          this.router.navigateByUrl('/videos/overview')
+        },
+        error: err => {
+        }
+      })
+    } else {
+      this.videoService.createVideo$(formData).subscribe({
+        next: params => {
+          this.router.navigateByUrl('/videos/overview')
+        },
+        error: err => {
+        }
+      })
+    }
   }
 
 }
