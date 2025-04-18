@@ -8,7 +8,8 @@ export const mainRoute: Routes = [
   {
     path: 'videos',
     loadChildren: () => import('../videos/video.route')
-  }
+  },
+  {path: '**', redirectTo: 'videos/overview'},
 ]
 
 export default mainRoute;

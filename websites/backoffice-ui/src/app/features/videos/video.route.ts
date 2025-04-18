@@ -4,7 +4,7 @@ import {ListVideoComponent} from './views/list-video/list-video.component';
 
 export const videoRoute: Routes = [
   {
-    path: '', component: ListVideoComponent
+    path: 'overview', component: ListVideoComponent
   },
   {
     path: 'new', component: VideoFromComponent

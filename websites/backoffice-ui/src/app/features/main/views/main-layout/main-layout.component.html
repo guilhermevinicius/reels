@@ -1,16 +1,6 @@
-<!--<div class="w-full bg-[rgba(255, 255, 255, 0.5)] p-4 flex flex-row items-center gap-4">-->
-<!--  <a routerLink="/videos">Videos</a>-->
-<!--  <span>Settings</span>-->
-<!--</div>-->
-<!--<div>-->
-<!--  <p-tabs value="0">-->
-<!--    <p-tablist>-->
-<!--      <p-tab routerLink="/settings/category" value="0">Categories</p-tab>-->
-<!--      <p-tab routerLink="/settings/genre" value="1">Genre</p-tab>-->
-<!--    </p-tablist>-->
-<!--  </p-tabs>-->
-<!--</div>-->
-
-<div class="px-4">
+<div class="flex flex-row items-start">
+  <app-sidebar />
+  <div class="flex-1 px-4">
     <router-outlet/>
+  </div>
 </div>

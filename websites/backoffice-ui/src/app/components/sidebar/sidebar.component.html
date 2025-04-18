@@ -1,0 +1,26 @@
+<div class="w-[300px] h-full">
+  <div class="p-4">
+    <span class="text-3xl text-indigo-600">Reels</span>
+  </div>
+
+  <div class="flex flex-col">
+    @for(menu of menus; track $index) {
+      <div class="p-3 font-semibold text-[#727272]">
+        <div class="flex flex-row items-center gap-4 px-4 py-3 rounded-xl">
+          <i [class]="menu.icon"></i>
+          <span> {{ menu.label }} </span>
+        </div>
+
+        <div class="flex flex-col">
+        @for(subMenu of menu.subMenus; track $index) {
+          <a [routerLink]="[subMenu.link]" routerLinkActive="bg-white shadow text-black" class="ml-8 px-4 py-3 rounded-xl">
+              <span class=""> {{ subMenu.label }} </span>
+          </a>
+        }
+        </div>
+
+      </div>
+    }
+  </div>
+
+</div>
