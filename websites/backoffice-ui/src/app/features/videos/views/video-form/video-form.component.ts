@@ -1,11 +1,12 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Router, RouterModule} from '@angular/router';
+import {ActivatedRoute, Router, RouterModule} from '@angular/router';
 import {UploadDraggingDropComponent} from '../../components/uploder-drag-drop/upload-drag-drop.component';
 import {InputComponent, SelectInputComponent, TextAreaInputComponent} from '../../../../components';
 import {VideoService} from '../../services';
-import {IVideoRequest} from '../../models';
-import {CommonModule, JsonPipe} from '@angular/common';
+import {IVideo, IVideoRequest} from '../../models';
+import {CommonModule} from '@angular/common';
+import {addWarning} from '@angular-devkit/build-angular/src/utils/webpack-diagnostics';
 
 @Component({
   selector: 'video-form',
@@ -21,14 +22,16 @@ import {CommonModule, JsonPipe} from '@angular/common';
   ]
 })
 export class VideoFromComponent {
-  file: File | null = null;
+  thumb: File | null = null;
+  thumbHalf: File | null = null;
+
+  previewThumb: string | null = null;
+  previewThumbHalf: string | null = null;
 
   videoForm = new FormGroup({
     title: new FormControl<string | null>(null, Validators.required),
     description: new FormControl<string | null>(null, Validators.required),
     yearLaunched: new FormControl<number | null>(null, Validators.required),
-    opened: new FormControl<boolean>(false, Validators.required),
-    published: new FormControl<boolean>(false, Validators.required),
     duration: new FormControl<number | null>(null, Validators.required),
     rating: new FormControl<number | null>(null, Validators.required),
     category: new FormControl<string | null>(null, Validators.required)
@@ -51,8 +54,33 @@ export class VideoFromComponent {
 
   constructor(
     private videoService: VideoService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
+    activatedRoute.params.subscribe((params: any) => {
+      if (params.videoId) {
+        this.videoService.getVideo$(params.videoId).subscribe({
+          next: data => {
+            this.setForm(data.data)
+          },
+          error: params => {},
+        })
+      }
+    })
+  }
+
+  setForm(video: IVideo): void {
+    this.videoForm.setValue({
+      title: video.title,
+      description: video.description,
+      yearLaunched: video.yearLaunched,
+      duration: video.duration,
+      rating: video.rating,
+      category: ""
+    });
+
+    this.previewThumb = video.thumb;
+    this.previewThumbHalf = video.thumbHalf;
   }
 
   onSubmit(): void {
@@ -62,8 +90,6 @@ export class VideoFromComponent {
       title: fields.title!,
       description: fields.description!,
       yearLaunched: Number(fields.yearLaunched!),
-      opened: fields.opened!,
-      published: fields.published!,
       duration: fields.duration!,
       rating: Number(fields.rating!)
     }
@@ -76,4 +102,5 @@ export class VideoFromComponent {
       }
     })
   }
+
 }

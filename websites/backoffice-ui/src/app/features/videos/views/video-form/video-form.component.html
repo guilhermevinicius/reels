@@ -37,8 +37,8 @@
 
     </div>
     <div class="w-[400px] flex flex-col gap-4">
-      <video-upload-drag-drop title="Upload thumb" (file)="file = $event"/>
-      <video-upload-drag-drop title="Upload thumb half" (file)="file = $event"/>
+      <video-upload-drag-drop title="Upload thumb" [previewUrl]="previewThumb" (file)="thumb = $event"/>
+      <video-upload-drag-drop title="Upload thumb half" [previewUrl]="previewThumbHalf" (file)="thumbHalf = $event"/>
     </div>
   </div>
 

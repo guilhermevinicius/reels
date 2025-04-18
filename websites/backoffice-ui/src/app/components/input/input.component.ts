@@ -14,29 +14,31 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
   ]
 })
 export class InputComponent implements ControlValueAccessor {
-  @Input({required:true}) label: string | null  = null;
+  @Input({required: true}) label: string | null = null;
   @Input() type: string = 'text';
-  @Input() placeholder: string  = '';
+  @Input() placeholder: string = '';
   value: any = '';
   disabled = false;
 
-  onChange = (_: any) => {};
-  onTouched = () => {};
+  onChange = (_: any) => {
+  };
+  onTouched = () => {
+  };
 
   writeValue(val: any): void {
-      this.value = val;
+    this.value = val;
   }
 
   registerOnChange(fn: any): void {
-      this.onChange = fn;
+    this.onChange = fn;
   }
 
   registerOnTouched(fn: any): void {
-      this.onTouched = fn;
+    this.onTouched = fn;
   }
 
   setDisabledState?(isDisabled: boolean): void {
-      this.disabled = isDisabled;
+    this.disabled = isDisabled;
   }
 
   onInputChange(event: Event) {

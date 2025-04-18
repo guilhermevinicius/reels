@@ -10,7 +10,7 @@ export const videoRoute: Routes = [
     path: 'new', component: VideoFromComponent
   },
   {
-    path: ':id', component: VideoFromComponent
+    path: ':videoId', component: VideoFromComponent
   }
 ]
 

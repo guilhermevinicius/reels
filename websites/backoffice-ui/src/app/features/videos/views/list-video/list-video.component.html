@@ -7,8 +7,7 @@
         <input type="text" class="w-full h-full outline-none" placeholder="Pesquise pelo nome">
       </div>
       <div class="flex flex-row items-center gap-4">
-        <p-button label="Novo" class="bg-green-600 px-4 text-black py-1 rounded-2xl" icon="pi pi-plus-circle"
-                  (onClick)="goTo()"/>
+        <button class="bg-green-600 px-4 text-black py-1 rounded-2xl" (click)="goTo()">Nome</button>
         <button class="cursor-pointer">
           <i class="pi pi-refresh text-xl"></i>
         </button>
@@ -19,8 +18,8 @@
 
     @for(video of videos; track $index) {
       <div class="flex flex-row items-center justify-between p-4">
-        <div class="flex flex-row items-center gap-2">
-          <img class="w-[65px] h-[65px] rounded-2xl" src="https://plus.unsplash.com/premium_photo-1697730150275-dba1cfe8af9c?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGFwZWwlMjBkZSUyMHBhcmVkZSUyMG5vdmElMjB5b3JrfGVufDB8fDB8fHww" alt="">
+        <div class="flex flex-row items-center gap-4">
+          <img class="w-[65px] h-[65px] rounded-2xl" [src]="video.thumb" alt="">
           <div class="flex flex-col">
             <span class="font-semibold text-lg">Nome</span>
             <span class="text-gray-400"> 18/04/2025 </span>
@@ -29,7 +28,7 @@
         <span>Published</span>
 
         <div class="flex flex-row gap-4">
-          <a [routerLink]="['/videos', video]" class="flex flex-row items-center gap-2 border border-gray-300 px-4 py-1 rounded-lg">
+          <a [routerLink]="['/videos', video.id]" class="flex flex-row items-center gap-2 border border-gray-300 px-4 py-1 rounded-lg">
             <i class="pi pi-pencil"></i>
             <span>Edit</span>
           </a>

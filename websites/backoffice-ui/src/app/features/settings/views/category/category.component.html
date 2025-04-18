@@ -7,8 +7,9 @@
         <input type="text" class="w-full h-full outline-none" placeholder="Pesquise pelo nome">
       </div>
       <div class="flex flex-row items-center gap-4">
-        <p-button label="Novo" class="bg-green-600 px-4 text-black py-1 rounded-2xl" icon="pi pi-plus-circle"
-                  (onClick)="openForm()"/>
+        <button class="bg-green-600 px-4 text-black py-1 rounded-2xl" (click)="openForm()">
+          Novo
+        </button>
         <button class="cursor-pointer" (click)="listCategory()">
           <i class="pi pi-refresh text-xl"></i>
         </button>
@@ -37,9 +38,12 @@
 
         </div>
         <div class="flex flex-row items-center justify-end gap-4">
-          <p-button label="Cancel" (click)="closeForm()" size="small"/>
-          <p-button class="bg-green-500 px-4 py-1 rounded-full" [disabled]="!categoryForm.valid" type="submit"
-                    label="Save" size="small"/>
+          <button (click)="closeForm()" size="small">
+            Cancel
+          </button>
+          <button class="bg-green-500 px-4 py-1 rounded-full" [disabled]="!categoryForm.valid" type="submit">
+            Save
+          </button>
         </div>
       </form>
     </div>
@@ -52,8 +56,12 @@
         <span> {{ category.name }} </span>
         <span> {{ category.description }} </span>
         <div class="flex flex-row items-center gap-4">
-            <p-button icon="pi pi-pencil" label="Edit" (onClick)="openForm(category.id)" />
-            <p-button icon="pi pi-trash" label="Remove" (onClick)="openDialogDeleteDialog($event, category.id)" />
+            <button (click)="openForm(category.id)">
+              Edit
+            </button>
+            <button (click)="openDialogDeleteDialog($event, category.id)">
+              Remove
+            </button>
         </div>
       </div>
     }
@@ -79,6 +87,3 @@
 
   </div>
 </div>
-
-<p-toast/>
-<p-confirmdialog/>

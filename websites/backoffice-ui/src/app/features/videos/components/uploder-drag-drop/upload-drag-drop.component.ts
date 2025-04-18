@@ -1,18 +1,23 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'video-upload-drag-drop',
   templateUrl: './upload-drag-drop.component.html'
 })
-export class UploadDraggingDropComponent {
+export class UploadDraggingDropComponent implements OnChanges {
+  @Input() previewUrl: string | null = null;
   @Input({required: true}) title: string | null = null;
   @Output() file = new EventEmitter<File>();
 
   filePath: File | null = null;
   previewPath: string | null = null;
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.previewUrl)
+      this.previewPath = this.previewUrl
+  }
+
   onDragOver(event: Event): void {
-    // console.log('onDragOver', event)
   }
 
   onDrop(event: Event): void {
@@ -30,11 +35,6 @@ export class UploadDraggingDropComponent {
       };
       reader.readAsDataURL(this.filePath);
     }
-  }
-
-  submit(): void {
-    if (this.filePath)
-      this.file.emit(this.filePath)
   }
 
   cleanFile() {

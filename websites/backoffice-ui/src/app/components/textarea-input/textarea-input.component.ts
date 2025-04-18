@@ -21,7 +21,6 @@ export class TextAreaInputComponent implements ControlValueAccessor {
   onChange = (_: any) => {};
   onTouched = () => {};
 
-
   writeValue(val: any): void {
     this.value = val;
   }
@@ -39,7 +38,7 @@ export class TextAreaInputComponent implements ControlValueAccessor {
   }
 
   onInputChange(event: Event) {
-    const val = (event.target as HTMLInputElement).value;
+    const val = (event.target as HTMLTextAreaElement).value;
     this.value = val;
     this.onChange(val);
     this.onTouched();

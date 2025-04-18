@@ -2,16 +2,13 @@
   <div class="flex flex-row items-center justify-between">
     <span class="font-semibold"> {{ title }} </span>
     <div class="flex flex-row items-center gap-4">
-      <button [disabled]="!filePath" class="bg-[#282828] text-white px-4 py-1 rounded-full disabled:bg-gray-200 disabled:text-black" (click)="cleanFile()">
+      <button [disabled]="!filePath && !previewPath" class="bg-[#282828] text-white px-4 py-1 rounded-full disabled:bg-gray-200 disabled:text-black" (click)="cleanFile()">
         <i class="pi pi-times"></i>
       </button>
-<!--      <button [disabled]="!filePath" (click)="submit()" class="bg-[#282828] text-white px-4 py-1 rounded-full disabled:bg-gray-200 disabled:text-black">-->
-<!--        <i class="pi pi-upload"></i>-->
-<!--      </button>-->
     </div>
   </div>
 
-  @if (!filePath) {
+  @if (!filePath && !previewPath) {
     <div
       class="h-[250px] bg-gray-50 rounded-2xl p-4 mt-4 flex flex-col items-center justify-center"
       (dragover)="onDragOver($event)"

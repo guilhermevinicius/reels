@@ -1,23 +1,31 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router, RouterModule} from '@angular/router';
-import {Button} from 'primeng/button';
 import {VideoService} from '../../services';
+import {IVideo} from '../../models';
 
 @Component({
   selector: 'list-video',
   templateUrl: './list-video.component.html',
   imports: [
-    RouterModule,
-    Button
+    RouterModule
   ]
 })
-export class ListVideoComponent {
-
-  videos = [1,2,3,4]
+export class ListVideoComponent implements OnInit {
+  videos: IVideo[] = []
 
   constructor(
+    private videoService: VideoService,
     private router: Router
   ) { }
+
+  ngOnInit(): void {
+    this.videoService.listVideo$().subscribe({
+      next: data => {
+        this.videos = data.data
+      },
+      error: err => {}
+    })
+  }
 
   goTo() {
     this.router.navigateByUrl('/videos/new');
