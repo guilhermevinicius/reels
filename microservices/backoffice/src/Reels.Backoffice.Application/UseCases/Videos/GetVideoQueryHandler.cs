@@ -21,9 +21,12 @@ internal sealed class GetVideoQueryHandler(
                 video.Description,
                 video.YearLaunched,
                 video.Duration,
+                video.Published,
+                video.Opened,
                 video.Rating,
                 storageService.GetObjectUrl(video.Thumb.Path).GetAwaiter().GetResult(),
-                storageService.GetObjectUrl(video.ThumbHalf.Path).GetAwaiter().GetResult()))
+                storageService.GetObjectUrl(video.ThumbHalf.Path).GetAwaiter().GetResult(),
+                video.CreatedAt))
             .FirstOrDefault();
 
         if (video is null)

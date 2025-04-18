@@ -20,9 +20,12 @@ internal sealed class ListVideoQueryHandler(
                 video.Description,
                 video.YearLaunched,
                 video.Duration,
+                video.Published,
+                video.Opened,
                 video.Rating,
                  storageService.GetObjectUrl(video.Thumb.Path).GetAwaiter().GetResult(),
-                storageService.GetObjectUrl(video.ThumbHalf.Path).GetAwaiter().GetResult()))
+                storageService.GetObjectUrl(video.ThumbHalf.Path).GetAwaiter().GetResult(),
+                video.CreatedAt))
             .ToArray();
 
         return await Task.FromResult(videos);
