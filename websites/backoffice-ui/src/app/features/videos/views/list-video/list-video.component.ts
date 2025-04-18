@@ -2,11 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {Router, RouterModule} from '@angular/router';
 import {VideoService} from '../../services';
 import {IVideo} from '../../models';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'list-video',
   templateUrl: './list-video.component.html',
   imports: [
+    CommonModule,
     RouterModule
   ]
 })

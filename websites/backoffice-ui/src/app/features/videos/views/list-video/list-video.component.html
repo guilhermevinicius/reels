@@ -7,7 +7,7 @@
         <input type="text" class="w-full h-full outline-none" placeholder="Pesquise pelo nome">
       </div>
       <div class="flex flex-row items-center gap-4">
-        <button class="bg-green-600 px-4 text-black py-1 rounded-2xl" (click)="goTo()">Nome</button>
+        <button class="bg-black text-white px-4 py-2 rounded-full" (click)="goTo()">Novo</button>
         <button class="cursor-pointer">
           <i class="pi pi-refresh text-xl"></i>
         </button>
@@ -17,22 +17,36 @@
   <div class="p-4">
 
     @for(video of videos; track $index) {
-      <div class="flex flex-row items-center justify-between p-4">
+      <div class="flex flex-row items-center justify-between px-4 py-2">
         <div class="flex flex-row items-center gap-4">
           <img class="w-[65px] h-[65px] rounded-2xl" [src]="video.thumb" alt="">
           <div class="flex flex-col">
-            <span class="font-semibold text-lg">Nome</span>
-            <span class="text-gray-400"> 18/04/2025 </span>
+            <span class="font-semibold text-lg">
+              {{ video.title }}
+            </span>
+            <span class="text-gray-400">
+              {{ video.createdAt | date:'dd/MM/yyyy hh:mm' }}
+            </span>
           </div>
         </div>
-        <span>Published</span>
+
+        <span>
+          {{ video.opened ? 'public' : 'private' }}
+        </span>
+
+        <span>Video</span>
+        <span>20</span>
 
         <div class="flex flex-row gap-4">
           <a [routerLink]="['/videos', video.id]" class="flex flex-row items-center gap-2 border border-gray-300 px-4 py-1 rounded-lg">
             <i class="pi pi-pencil"></i>
             <span>Edit</span>
           </a>
-          <button [disabled]="true" class="flex flex-row items-center gap-2 border border-gray-300 px-4 py-1 rounded-lg disabled:bg-gray-200">
+          <a [routerLink]="['/videos', video.id]" class="flex flex-row items-center gap-2 border border-gray-300 px-4 py-1 rounded-lg">
+            <i class="pi pi-video"></i>
+            <span>Medias</span>
+          </a>
+          <button [disabled]="video.published" class="flex flex-row items-center gap-2 border border-gray-300 px-4 py-1 rounded-lg disabled:bg-gray-200">
             <i class="pi pi-send"></i>
             <span>Published</span>
           </button>

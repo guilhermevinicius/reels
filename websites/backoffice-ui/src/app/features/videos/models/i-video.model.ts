@@ -9,4 +9,5 @@ export interface IVideo {
   rating: number
   thumb: string
   thumbHalf: string
+  createdAt: Date
 }

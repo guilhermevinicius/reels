@@ -34,6 +34,7 @@ export class UploadDraggingDropComponent implements OnChanges {
         this.previewPath = reader.result as string;
       };
       reader.readAsDataURL(this.filePath);
+      this.file.emit(this.filePath)
     }
   }
 

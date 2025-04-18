@@ -17,7 +17,10 @@
 
         <div class="p-4">
           <div class="flex flex-col gap-4">
-            <app-input label="Title" formControlName="title"/>
+            <div class="flex flex-row gap-4">
+              <app-input label="Title" formControlName="title"/>
+              <select-input [options]="types" label="Type" />
+            </div>
             <textarea-input label="Description" formControlName="description" />
           </div>
         </div>
@@ -40,6 +43,7 @@
       <video-upload-drag-drop title="Upload thumb" [previewUrl]="previewThumb" (file)="thumb = $event"/>
       <video-upload-drag-drop title="Upload thumb half" [previewUrl]="previewThumbHalf" (file)="thumbHalf = $event"/>
     </div>
+
   </div>
 
 </form>

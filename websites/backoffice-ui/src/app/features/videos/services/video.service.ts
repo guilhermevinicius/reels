@@ -22,7 +22,7 @@ export class VideoService {
     return this.#httpClient.get<IApiResponse<IVideo[]>>(this.apiRouteV1)
   }
 
-  createVideo$(body: IVideoRequest): Observable<IApiResponse<boolean>> {
+  createVideo$(body: FormData): Observable<IApiResponse<boolean>> {
     return this.#httpClient.post<IApiResponse<boolean>>(this.apiRouteV1, body);
   }
 

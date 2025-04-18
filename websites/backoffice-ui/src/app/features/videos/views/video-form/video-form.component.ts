@@ -52,6 +52,11 @@ export class VideoFromComponent {
     { name: 'category', value: 'category' }
   ]
 
+  types = [
+    { name: 'Film', value: 1 },
+    { name: 'Series', value: 2 }
+  ]
+
   constructor(
     private videoService: VideoService,
     private router: Router,
@@ -86,17 +91,24 @@ export class VideoFromComponent {
   onSubmit(): void {
     const fields = this.videoForm.getRawValue();
 
-    const body: IVideoRequest = {
-      title: fields.title!,
-      description: fields.description!,
-      yearLaunched: Number(fields.yearLaunched!),
-      duration: fields.duration!,
-      rating: Number(fields.rating!)
-    }
+    if (this.thumb === null && this.thumbHalf === null)
+      return;
 
-    this.videoService.createVideo$(body).subscribe({
+    const formData = new FormData()
+    formData.append('title', fields.title!)
+    formData.append('description', fields.description!)
+    formData.append('yearLaunched', fields.yearLaunched!.toString())
+    formData.append('duration', fields.duration!.toString())
+    formData.append('rating', fields.rating!.toString())
+    formData.append('thumb', this.thumb!)
+    formData.append('thumbHalf', this.thumbHalf!)
+
+    // thumb: File | null = null;
+    // thumbHalf: File | null = null;
+
+    this.videoService.createVideo$(formData).subscribe({
       next: params => {
-        this.router.navigateByUrl('/videos')
+        this.router.navigateByUrl('/videos/overview')
       },
       error: err => {
       }
