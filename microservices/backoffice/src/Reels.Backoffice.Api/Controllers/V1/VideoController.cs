@@ -13,6 +13,14 @@ public class VideoController(
     ISender sender)
     : BackofficeBaseController
 {
+    [HttpGet("{videoId:guid}")]
+    public async Task<IActionResult> Get(Guid videoId, CancellationToken cancellationToken)
+    {
+        var query = new GetVideoQuery(videoId);
+        var response = await sender.Send(query, cancellationToken);
+        return CustomResponse(response);
+    }
+
     [HttpGet]
     public async Task<IActionResult> List(CancellationToken cancellationToken)
     {

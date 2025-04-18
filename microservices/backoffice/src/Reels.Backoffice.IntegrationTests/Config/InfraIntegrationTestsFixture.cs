@@ -1,4 +1,5 @@
 using System.Text;
+using Bogus;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -8,6 +9,8 @@ using Minio;
 using Reels.Backoffice.Application.Contracts.Storage;
 using Reels.Backoffice.Domain.Models.Category;
 using Reels.Backoffice.Domain.Models.Genre;
+using Reels.Backoffice.Domain.Models.Video;
+using Reels.Backoffice.Domain.Models.Video.Enums;
 using Reels.Backoffice.Infrastructure.Storage;
 using Reels.Backoffice.Persistence.Configurations;
 using Testcontainers.Minio;
@@ -120,12 +123,18 @@ public sealed class InfraIntegrationTestsFixture : WebApplicationFactory<Program
         var provider = scope.ServiceProvider;
 
         await using var context = provider.GetRequiredService<DataContext>();
+        
+        var storage = provider.GetRequiredService<IStorageService>();
+
+        await PopulateStorage(storage);
 
         await context.Database.EnsureCreatedAsync();
 
         await PopulateCategories(context);
 
         await PopulateGenre(context);
+
+        await PopulateVideos(context);
 
         await context.SaveChangesAsync();
     }
@@ -180,6 +189,36 @@ public sealed class InfraIntegrationTestsFixture : WebApplicationFactory<Program
         await context.AddAsync(genre, CancellationToken.None);
         await context.AddAsync(genre2, CancellationToken.None);
         await context.AddAsync(genre3, CancellationToken.None);
+    }
+
+    private static async Task PopulateVideos(DataContext context)
+    {
+        var video = Video.Create(
+            "Title",
+            "Description",
+            2025,
+            true,
+            true,
+            90,
+            Rating.Rate12);
+
+        video.Id = Guid.Parse("2278a870-8dc8-4d70-acb7-f6ece6754b29");
+
+        video.UpdateThumb("/uplods/video.jpg");
+        video.UpdateThumbHalf("/uplods/video.jpg");
+
+        await context.AddAsync(video, CancellationToken.None);
+    }
+
+    private static async Task PopulateStorage(IStorageService storage)
+    {
+        var file = new MemoryStream("Files!"u8.ToArray());
+
+        await storage.UploadFile(
+            "/uplods/video.jpg",
+            "image/png",
+            "video.jpg",
+            file);
     }
 
     #endregion
