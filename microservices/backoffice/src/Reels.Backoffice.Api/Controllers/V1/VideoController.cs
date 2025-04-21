@@ -53,4 +53,30 @@ public class VideoController(
         var response = await sender.Send(command, cancellationToken);
         return CustomResponse(response);
     }
+
+    [HttpPut("{videoId:guid}")]
+    public async Task<IActionResult> Create(Guid videoId, [FromForm] CreateVideoRequest request, IFormFile thumb, IFormFile thumbHalf,
+        CancellationToken cancellationToken)
+    {
+        var command = new UpdateVideoCommand(
+            videoId,
+            request.Title,
+            request.Description,
+            request.YearLaunched,
+            request.Opened,
+            request.Published,
+            request.Duration,
+            request.Rating,
+            new MediaMetadata(
+                thumb.FileName,
+                thumb.ContentType,
+                thumb.OpenReadStream()),
+            new MediaMetadata(
+                thumbHalf.FileName,
+                thumbHalf.ContentType,
+                thumbHalf.OpenReadStream()));
+
+        var response = await sender.Send(command, cancellationToken);
+        return CustomResponse(response);
+    }
 }
