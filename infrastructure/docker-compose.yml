@@ -2,6 +2,7 @@ version: '3.9'
 
 include:
   - ./storage/docker-compose.yml
+  - ../microservices/backoffice/docker/docker-compose.yml
 
 services:
   reels_postgres:

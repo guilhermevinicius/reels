@@ -1,0 +1,19 @@
+services:
+  reels-backoffice-api:
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile
+    container_name: reels-backoffice-api
+    ports:
+      - "5000:80"
+    environment:
+      - ConnectionStrings__Postgres=Host=reels_postgres;Port=5432;Database=reels_backoffice;Username=postgres;Password=postgres;
+      - StorageSettings__Endpoint=localhost:9000
+      - StorageSettings__AccessKey=SBUAEjTcT8pGRMVkDRDd
+      - StorageSettings__SecretKey=XFBNhAt66fMORVAWqbrSYQWMalAUL0z09eTzjQtH
+      - StorageSettings__BucketName=reels-dev
+    depends_on:
+      - reels_postgres
+      - minio
+    networks:
+      - reels_network
