@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: kongpass
       POSTGRES_DB: kong
     networks:
-      - kong-net
+      - reels_network
     volumes:
       - kong-data:/var/lib/postgresql/data
     healthcheck:
@@ -30,7 +30,7 @@ services:
       KONG_VITALS: "off"
       KONG_LICENSE_DATA: ""
     networks:
-      - kong-net
+      - reels_network
     command: kong migrations bootstrap
     depends_on:
       kong-database:
@@ -56,7 +56,7 @@ services:
       KONG_VITALS: "off"
       KONG_LICENSE_DATA: ""
     networks:
-      - kong-net
+      - reels_network
     ports:
       - "8000:8000"
       - "8001:8001"
@@ -69,10 +69,6 @@ services:
       kong-database:
         condition: service_healthy
     restart: always
-
-networks:
-  kong-net:
-    name: kong-net
 
 volumes:
   kong-data:

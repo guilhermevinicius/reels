@@ -1,6 +1,7 @@
 include:
   - ./storage/docker-compose.yml
-  # - ../microservices/backoffice/docker/docker-compose.yml
+  - ./kong/docker-compose.yml
+  - ../microservices/backoffice/docker/docker-compose.yml
 
 services:
   reels_postgres:

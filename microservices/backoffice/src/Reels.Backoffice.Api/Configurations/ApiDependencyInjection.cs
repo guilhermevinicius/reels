@@ -31,7 +31,17 @@ internal static class ApiDependencyInjection
 
         app.ApplyMigrations();
 
-        app.MapScalarApiReference();
+        app.MapScalarApiReference(options =>
+        {
+            var prefix = app.Environment.IsDevelopment() 
+                ? "/"
+                : "/backoffice"; 
+
+            options.Servers = new List<ScalarServer>()
+            {
+                new(prefix)
+            };
+        });
 
         app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
