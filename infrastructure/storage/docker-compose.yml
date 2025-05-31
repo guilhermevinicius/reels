@@ -6,8 +6,23 @@ services:
       - "9000:9000"
       - "9001:9001"
     environment:
-      - MINIO_ROOT_USER=admin
-      - MINIO_ROOT_PASSWORD=admin123
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: admin123
+      MINIO_NOTIFY_AMQP_ENABLE_PRIMARY: "on"
+      MINIO_NOTIFY_AMQP_URL_PRIMARY: "amqp://guest:guest@rabbitmq:5672"
+      MINIO_NOTIFY_AMQP_EXCHANGE_PRIMARY: "minio_events"
+      MINIO_NOTIFY_AMQP_EXCHANGE_TYPE_PRIMARY: "fanout"
+      MINIO_NOTIFY_AMQP_ROUTING_KEY_PRIMARY: "minio.bucket.events"
+      MINIO_NOTIFY_AMQP_MANDATORY_PRIMARY: "off"
+      MINIO_NOTIFY_AMQP_DURABLE_QUEUE_PRIMARY: "on"
+      MINIO_PROMETHEUS_URL: /metrics
     volumes:
       - ./minio/data:/data
-    command: server /data --console-address ":9001"
+    networks:
+      - reels_network
+    depends_on:
+      - rabbitmq
+    command: "minio server /data --console-address ':9001' & sleep 5 && \
+             mc alias set local http://localhost:9000 admin admin123 && \
+             mc mb local/mybucket && \
+             mc event add local/mybucket arn:minio:sqs::PRIMARY:amqp --event put"
